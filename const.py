@@ -15,7 +15,7 @@ def _build_xp_table():
 XP_TABLE = _build_xp_table()
 
 
-SKILLS = ["attack", "defence", "strength", "constitution", "ranged", "prayer", "magic", 
+SKILLS = ["attack", "defence", "strength", "hitpoints", "ranged", "prayer", "magic", 
           "cooking", "woodcutting", "fletching", "fishing", "firemaking", "crafting", 
           "smithing", "mining", "herblore", "agility", "thieving", "slayer", "farming",
           "runecrafting", "hunter", "construction"]

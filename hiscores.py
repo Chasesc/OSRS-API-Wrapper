@@ -42,6 +42,48 @@ class Hiscores(object):
 
 			self.skills[skill] = Skill(skill, rank, level, xp)
 
+	def max_skill(self, method = 'xp'):
+		ninf = -float('inf')
+		max_skill = Skill('attack', xp = ninf, rank = ninf)
+		for skill in self.skills.values():
+			if getattr(skill, method) > getattr(max_skill, method):
+				max_skill = skill
+
+		return max_skill
+
+	def min_skill(self, method = 'xp'):
+		inf = float('inf')
+		min_skill = Skill('attack', xp = inf, rank = inf)
+		for skill in self.skills.values():
+			if getattr(skill, method) < getattr(min_skill, method):
+				min_skill = skill
+
+		return min_skill
+
+	def closest_skill(self):
+		closest = Skill('attack')
+		closest_xp_tnl = float('inf')
+		for skill in self.skills.values():
+			if skill.xp_tnl() < closest_xp_tnl:
+				closest_xp_tnl, closest = skill.xp_tnl(), skill
+
+		return closest
+
+	def skills_under(self, value, method = 'level'):
+		def under(hiscore, s):
+			return getattr(hiscore.skills[s], method) < value
+
+		return self.filter(under)
+
+	def skills_over(self, value, method = 'level'):
+		def over(hiscore, s):
+			return getattr(hiscore.skills[s], method) > value
+
+		return self.filter(under)
+
+	def filter(self, predicate):
+		return {s : self.skills[s] for s in self.skills if predicate(self, s)}
+
 
 	def __str__(self):
 		return '\n'.join(str(self.skills[skill]) for skill in self.skills)
@@ -51,7 +93,9 @@ class Hiscores(object):
 
 def main():
 	test = Hiscores('Zezima')
-	print(str(test))
+	#print(str(test))
+	print(test.closest_skill())
+	#print(test.skills_under(300000, 'xp'))
 
 if __name__ == '__main__':
 	main()
