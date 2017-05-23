@@ -7,8 +7,9 @@ from skill import Skill
 
 class Hiscores(object):
 
-	def __init__(self, username):
+	def __init__(self, username, type = const.AccountType.NORMAL):
 		self.username = username
+		self._url = const.BASE_URL + const.HISCORE_URLS[type] + "?player="
 		self.update()
 
 	def update(self):
@@ -17,7 +18,7 @@ class Hiscores(object):
 
 	def _get_api_data(self):
 		try:
-			url = urllib.request.urlopen("%s%s" % (const.HISCORE_URL, self.username))
+			url = urllib.request.urlopen("%s%s" % (self._url, self.username))
 		except urllib.error.HTTPError:
 			raise Exception("Unable to find %s in the hiscores." % self.username)
 
@@ -86,7 +87,8 @@ class Hiscores(object):
 
 
 	def __str__(self):
-		return '\n'.join(str(self.skills[skill]) for skill in self.skills)
+		return ('\n'.join(str(item) for item in [self.rank, self.total_level, self.total_xp]) + '\n' +
+		        '\n'.join(str(self.skills[skill]) for skill in self.skills))
 
 	# ==
 	def __eq__(self, other):
@@ -122,15 +124,8 @@ class Hiscores(object):
 
 
 def main():
-	zezima = Hiscores('Zezima')
-	lynx = Hiscores('Lynx Titan')
-	print(zezima == lynx, zezima == zezima)
-	print(zezima != lynx, zezima != zezima)
-	print(zezima > lynx, zezima < lynx, zezima > zezima)
-	print(zezima >= zezima, zezima <= zezima)
-
-	print(zezima.closest_skill())
-	print(zezima.skills_under(300000, 'xp'))
+	top = Hiscores('Lelalt', const.AccountType.IRONMAN)
+	print(str(top))
 
 if __name__ == '__main__':
 	main()

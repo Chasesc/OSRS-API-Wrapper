@@ -1,4 +1,12 @@
 
+class AccountType(object):
+	NORMAL           = 0
+	IRONMAN          = 1
+	HARDCORE_IRONMAN = 2
+	ULTIMATE_IRONMAN = 3
+	DEADMAN          = 4
+	DEADMAN_SEASONAL = 5
+
 # Thanks to http://mirekw.com/rs/RSDOnline/Guides/guide.aspx?file=Experience%20formula.html for the formula
 def _build_xp_table():
 	table = [0]
@@ -28,4 +36,7 @@ SKILLS_SET = set(SKILLS)
 # Allows us to get the index of a skill from the name
 SKILLS_MAP = {s : f for f, s in enumerate(SKILLS)}
 
-HISCORE_URL = "http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player="
+BASE_URL = "http://services.runescape.com"
+HISCORE_URLS = ["/m=hiscore_oldschool/index_lite.ws",                  "/m=hiscore_oldschool_ironman/index_lite.ws",
+				"/m=hiscore_oldschool_hardcore_ironman/index_lite.ws", "/m=hiscore_oldschool_ultimate/index_lite.ws",
+				"/m=hiscore_oldschool_deadman/index_lite.ws",          "/m=hiscore_oldschool_seasonal/index_lite.ws"]
