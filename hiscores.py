@@ -88,14 +88,49 @@ class Hiscores(object):
 	def __str__(self):
 		return '\n'.join(str(self.skills[skill]) for skill in self.skills)
 
+	# ==
+	def __eq__(self, other):
+		if isinstance(other, Hiscores):
+			return self.rank == other.rank
+		return False
+
+	# !=
+	def __ne__(self, other):
+		equals = self.__eq__(other)
+		return not equals
+
+	# <
+	def __lt__(self, other):
+		if isinstance(other, Hiscores):
+			return self.rank > other.rank # flipped because lower rank is better
+		return False
+
+	# >
+	def __gt__(self, other):
+		if isinstance(other, Hiscores):
+			return self.rank < other.rank # flipped because lower rank is better
+		return False
+
+	# <=
+	def __le__(self, other):
+		return self.__eq__(other) or self.__lt__(other)
+
+	# >=
+	def __ge__ (self, other):
+		return self.__eq__(other) or self.__gt__(other)
 
 
 
 def main():
-	test = Hiscores('Zezima')
-	#print(str(test))
-	print(test.closest_skill())
-	#print(test.skills_under(300000, 'xp'))
+	zezima = Hiscores('Zezima')
+	lynx = Hiscores('Lynx Titan')
+	print(zezima == lynx, zezima == zezima)
+	print(zezima != lynx, zezima != zezima)
+	print(zezima > lynx, zezima < lynx, zezima > zezima)
+	print(zezima >= zezima, zezima <= zezima)
+
+	print(zezima.closest_skill())
+	print(zezima.skills_under(300000, 'xp'))
 
 if __name__ == '__main__':
 	main()
