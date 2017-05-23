@@ -32,7 +32,7 @@ class Hiscores(object):
 
 		self.rank, self.total_level, self.total_xp = [self._api_response[i] for i in range(offset)]		
 
-		self.skills = []
+		self.skills = {}
 		for i in range(1, const.SKILLS_AMT + 1):
 			index = offset * i
 			skill, rank, level, xp = (const.SKILLS[i - 1],
@@ -40,11 +40,11 @@ class Hiscores(object):
 									  self._api_response[index + 1],
 									  self._api_response[index + 2])
 
-			self.skills.append(Skill(skill, rank, level, xp))
+			self.skills[skill] = Skill(skill, rank, level, xp)
 
 
 	def __str__(self):
-		return '\n'.join(str(skill) for skill in self.skills)
+		return '\n'.join(str(self.skills[skill]) for skill in self.skills)
 
 
 
