@@ -40,3 +40,11 @@ BASE_URL = "http://services.runescape.com"
 HISCORE_URLS = ["/m=hiscore_oldschool/index_lite.ws",                  "/m=hiscore_oldschool_ironman/index_lite.ws",
 				"/m=hiscore_oldschool_hardcore_ironman/index_lite.ws", "/m=hiscore_oldschool_ultimate/index_lite.ws",
 				"/m=hiscore_oldschool_deadman/index_lite.ws",          "/m=hiscore_oldschool_seasonal/index_lite.ws"]
+
+BASE_URL_GE = BASE_URL + '/m=itemdb_oldschool/'
+GE_BY_ID = BASE_URL_GE + 'api/catalogue/detail.json?item='
+
+GE_ICON = BASE_URL_GE + "obj_sprite.gif?id="
+GE_LARGE_ICON = BASE_URL_GE + "obj_big.gif?id="
+
+OSBUDDY_PRICE_URI = "http://api.rsbuddy.com/grandExchange?a=guidePrice&i="
