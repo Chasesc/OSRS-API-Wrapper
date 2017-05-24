@@ -21,8 +21,9 @@ class GrandExchange(object):
 
 			osb_data = osb_response.read()
 			encoding = osb_response.info().get_content_charset('utf-8')
-			osb_json_data = json.loads(osb_data.decode(encoding))
+			osb_response.close()
 
+			osb_json_data = json.loads(osb_data.decode(encoding))
 			osb_price = osb_json_data['overall']
 		except urllib.error.HTTPError:
 			pass # oh well, price will just be less accurate
