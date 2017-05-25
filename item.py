@@ -50,13 +50,13 @@ class Item(object):
 	@staticmethod
 	def _load_data():
 		with open('items_osrs.json') as file:
-				Item._items = json.load(file)
-				for id in Item._items:
-					n = Item._items[id]['name'].lower()
-					tradeable = Item._items[id]['tradeable']
+			Item._items = json.load(file)
+			for id in Item._items:
+				n = Item._items[id]['name'].lower()
+				tradeable = Item._items[id]['tradeable']
 
-					if tradeable:
-						Item._name_to_id[n] = int(id)
+				if tradeable:
+					Item._name_to_id[n] = int(id)
 
 def main():
 	print(Item.get_ids('abyssal whip')) # exact match
