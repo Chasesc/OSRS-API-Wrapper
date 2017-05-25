@@ -14,8 +14,11 @@ class Skill(object):
 	def xp_tnl(self):
 		return const.XP_TABLE[self.level] - self.xp
 
+	def xp_to(self, level):
+		return const.XP_TABLE[level - 1] - self.xp
+
 	def __str__(self):
-		return "%s-%s-%s-%s" % (str(self.name), str(self.rank), str(self.level), str(self.xp))
+		return "rank-%s level-%s xp-%s" % (str(self.rank), str(self.level), str(self.xp))
 
 	def __repr__(self):
 		return self.__str__()
