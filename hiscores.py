@@ -80,7 +80,7 @@ class Hiscores(object):
 		def over(hiscore, s):
 			return getattr(hiscore.skills[s], method) > value
 
-		return self.filter(under)
+		return self.filter(over)
 
 	def filter(self, predicate):
 		return {s : self.skills[s] for s in self.skills if predicate(self, s)}
