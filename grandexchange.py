@@ -77,5 +77,9 @@ def main():
 	whip = GrandExchange.item(abyssal_whip_id)
 	print(whip.name, whip.description, whip.price(), sep='\n')
 
+	rune_axe_id = Item.get_ids('rune axe')
+	rune_axe = GrandExchange.item(rune_axe_id)
+	print(rune_axe.name, rune_axe.description, rune_axe.price(), sep='\n')
+
 if __name__ == '__main__':
 	main()
