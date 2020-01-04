@@ -23,6 +23,9 @@ def _build_xp_table():
 # index retrives the amount of xp required for level index + 1
 XP_TABLE = _build_xp_table()
 
+UNUSED_OR_UNKNOWN = (
+    "UNUSED_OR_UNKNOWN"  # Some rows in the API response don't seem to map to anything
+)
 
 SKILLS = [
     "attack",
@@ -50,13 +53,65 @@ SKILLS = [
     "construction",
 ]
 
+minigames = [
+    UNUSED_OR_UNKNOWN,
+    "Bounty Hunter",
+    "Bounty Hunter Rogue",
+    "clue_scrolls_all",
+    "clue_scrolls_beginner",
+    "clue_scrolls_easy",
+    "clue_scrolls_medium",
+    "clue_scrolls_hard",
+    "clue_scrolls_elite",
+    "clue_scrolls_master",
+    "Last Man Standing",
+]
+
+bosses = [
+    "Abyssal Sire",
+    "Alchemical Hydra",
+    "Barrows Chests",
+    UNUSED_OR_UNKNOWN,
+    "Chambers of Xeric",
+    UNUSED_OR_UNKNOWN,
+    "Chaos Elemental",
+    "Chaos Fanatic",
+    "Commander Zilyana",
+    UNUSED_OR_UNKNOWN,
+    "Crazy Archaeologist",
+    "Dagannoth Prime",
+    "Dagannoth Rex",
+    "Dagannoth Supreme",
+    UNUSED_OR_UNKNOWN,
+    "General Graardor",
+    "Giant Mole",
+    UNUSED_OR_UNKNOWN,
+    "Hespori",
+    "Kalphite Queen",
+    "King Black Dragon",
+    "Kraken",
+    "Kree'Arra",
+    "K'ril Tsutsaroth",
+    UNUSED_OR_UNKNOWN,
+    UNUSED_OR_UNKNOWN,
+    UNUSED_OR_UNKNOWN,
+    "Scorpia",
+    "Skotizo",
+    UNUSED_OR_UNKNOWN,
+    UNUSED_OR_UNKNOWN,
+    UNUSED_OR_UNKNOWN,
+    "Thermonuclear Smoke Devil",
+    UNUSED_OR_UNKNOWN,
+    "TzTok-Jad",
+    "Venenatis",
+    "Vet'ion",
+    "Vorkath",
+    "Wintertodt",
+    "Zalcano",
+    "Zulrah",
+]
+
 SKILLS_AMT = len(SKILLS)
-
-# Allows for efficient querying of membership
-SKILLS_SET = set(SKILLS)
-
-# Allows us to get the index of a skill from the name
-SKILLS_MAP = {s: f for f, s in enumerate(SKILLS)}
 
 BASE_URL = "http://services.runescape.com"
 HISCORE_URLS = [

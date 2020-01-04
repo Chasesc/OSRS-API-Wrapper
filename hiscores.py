@@ -15,6 +15,18 @@ class Hiscores(object):
         self._set_data()
 
     def _get_api_data(self):
+        """
+        The RS api is not documented and is given as a list of numbers on multiple lines. These lines are:
+
+        "overall_rank, total_level, total_xp"
+        "skill_rank, skill_level, skill_xp" for all skills
+        "minigame_rank, minigame_score" for all minigames
+        "boss_rank, boss_kills" for all bosses
+
+        If a player is unranked for any of these categories, there is a value of -1 in that row.
+
+        example: https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player=lelalt
+        """
         try:
             url = urllib.request.urlopen("%s%s" % (self._url, self.username))
         except urllib.error.HTTPError:
