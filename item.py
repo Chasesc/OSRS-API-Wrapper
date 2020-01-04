@@ -1,5 +1,3 @@
-#! python3.5
-
 import const
 import json
 
