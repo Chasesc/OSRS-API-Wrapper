@@ -53,21 +53,21 @@ SKILLS = [
     "construction",
 ]
 
-minigames = [
+MINIGAMES = [
     UNUSED_OR_UNKNOWN,
     "Bounty Hunter",
     "Bounty Hunter Rogue",
-    "clue_scrolls_all",
-    "clue_scrolls_beginner",
-    "clue_scrolls_easy",
-    "clue_scrolls_medium",
-    "clue_scrolls_hard",
-    "clue_scrolls_elite",
-    "clue_scrolls_master",
+    "Clue Scrolls (all)",
+    "Clue Scrolls (beginner)",
+    "Clue Scrolls (easy)",
+    "Clue Scrolls (medium)",
+    "Clue Scrolls (hard)",
+    "Clue Scrolls (elite)",
+    "Clue Scrolls (master)",
     "Last Man Standing",
 ]
 
-bosses = [
+BOSSES = [
     "Abyssal Sire",
     "Alchemical Hydra",
     "Barrows Chests",
@@ -112,6 +112,8 @@ bosses = [
 ]
 
 SKILLS_AMT = len(SKILLS)
+MINIGAMES_AMT = len(MINIGAMES)
+BOSSES_AMT = len(BOSSES)
 
 BASE_URL = "http://services.runescape.com"
 HISCORE_URLS = [

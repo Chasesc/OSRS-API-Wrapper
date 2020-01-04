@@ -3,11 +3,24 @@ import re
 import urllib.request
 from skill import Skill
 
+from collections import namedtuple
+
+
+Minigame = namedtuple("Minigame", ["name", "rank", "score"])
+Boss = namedtuple("Boss", ["name", "rank", "kills"])
+
 
 class Hiscores(object):
     def __init__(self, username, type=const.AccountType.NORMAL):
         self.username = username
         self._url = const.BASE_URL + const.HISCORE_URLS[type] + "?player="
+
+        self.rank, self.total_level, self.total_xp = -1, -1, -1
+
+        self.skills = {}
+        self.minigames = {}
+        self.bosses = {}
+
         self.update()
 
     def update(self):
@@ -15,6 +28,17 @@ class Hiscores(object):
         self._set_data()
 
     def _get_api_data(self):
+        try:
+            url = urllib.request.urlopen("%s%s" % (self._url, self.username))
+        except urllib.error.HTTPError:
+            raise Exception("Unable to find %s in the hiscores." % self.username)
+
+        data = url.read()
+        url.close()
+
+        return data.decode().split("\n")
+
+    def _set_data(self):
         """
         The RS api is not documented and is given as a list of numbers on multiple lines. These lines are:
 
@@ -27,35 +51,45 @@ class Hiscores(object):
 
         example: https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player=lelalt
         """
-        try:
-            url = urllib.request.urlopen("%s%s" % (self._url, self.username))
-        except urllib.error.HTTPError:
-            raise Exception("Unable to find %s in the hiscores." % self.username)
 
-        data = url.read()
-        url.close()
+        # Get all the skills, minigames, or bosses
+        def _get_api_chunk(cls, *, names, start_index):
+            """
+            cls: Skill, Minigame, or Boss - Type of the chunk 
+            names: List[str] - a list of all the (Skill, Minigame, or Boss) names in the order the API returns them.
+                   (const.SKILLS, const.MINIGAMES, or const.BOSSES)
+            start_index: The index into self._api_response where the chunk begins
+            """
 
-        skill_data = list(map(int, re.findall(r"\d+", str(data))))
-        return skill_data
+            chunk = {}
 
-    def _set_data(self):
-        offset = 3  # first three are rank, total level, and total xp
+            for i, name in enumerate(names, start=start_index):
+                if name == const.UNUSED_OR_UNKNOWN:
+                    continue
 
-        self.rank, self.total_level, self.total_xp = [
-            self._api_response[i] for i in range(offset)
-        ]
+                # The API only returns integers
+                row_data = [int(col) for col in self._api_response[i].split(",")]
 
-        self.skills = {}
-        for i in range(1, const.SKILLS_AMT + 1):
-            index = offset * i
-            skill, rank, level, xp = (
-                const.SKILLS[i - 1],
-                self._api_response[index],
-                self._api_response[index + 1],
-                self._api_response[index + 2],
-            )
+                chunk[name] = cls(name, *row_data)
 
-            self.skills[skill] = Skill(skill, rank, level, xp)
+            return chunk
+
+        overall_data = self._api_response[0].split(",")
+        self.rank, self.total_level, self.total_xp = (
+            int(overall_data[0]),
+            int(overall_data[1]),
+            int(overall_data[2]),
+        )
+
+        self.skills = _get_api_chunk(Skill, names=const.SKILLS, start_index=1)
+        self.minigames = _get_api_chunk(
+            Minigame, names=const.MINIGAMES, start_index=1 + const.SKILLS_AMT
+        )
+        self.bosses = _get_api_chunk(
+            Boss,
+            names=const.BOSSES,
+            start_index=1 + const.SKILLS_AMT + const.MINIGAMES_AMT,
+        )
 
     def max_skill(self, method="xp"):
         ninf = -float("inf")
