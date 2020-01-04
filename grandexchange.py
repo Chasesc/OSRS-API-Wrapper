@@ -1,6 +1,7 @@
 import const
 import urllib.request
 import json
+import warnings
 
 from item import Item
 from pricetrend import PriceTrend
@@ -13,6 +14,13 @@ class GrandExchange(object):
     # are closer to the actively traded prices.
     @staticmethod
     def _osbuddy_price(id):
+        # TODO: remove this. OSBuddy no longer has a public API?
+        warnings.warn(
+            "OSBuddy no longer provides a public API. This functionality will be removed.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
         osb_uri = const.OSBUDDY_PRICE_URI + str(id)
         osb_price = None
         try:
@@ -24,13 +32,13 @@ class GrandExchange(object):
 
             osb_json_data = json.loads(osb_data.decode(encoding))
             osb_price = osb_json_data["overall"]
-        except urllib.error.HTTPError:
+        except Exception:
             pass  # oh well, price will just be less accurate
 
         return osb_price
 
     @staticmethod
-    def item(id, try_osbuddy=True):
+    def item(id, try_osbuddy=False):
         uri = const.GE_BY_ID + str(id)
 
         try:

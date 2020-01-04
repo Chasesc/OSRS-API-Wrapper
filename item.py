@@ -3,7 +3,7 @@ import json
 
 
 class Item(object):
-    _items = None
+    _items = {}
     _name_to_id = {}
 
     def __init__(self, id, name, description, is_mem, type, type_icon, price_info):
