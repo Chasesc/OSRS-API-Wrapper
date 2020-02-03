@@ -13,7 +13,7 @@ Boss = namedtuple("Boss", ["name", "rank", "kills"])
 class Hiscores(object):
     def __init__(self, username, type=const.AccountType.NORMAL):
         self.username = username
-        self._url = const.BASE_URL + const.HISCORE_URLS[type] + "?player="
+        self._url = const.BASE_URL + type.value + "?player="
 
         self.rank, self.total_level, self.total_xp = -1, -1, -1
 
