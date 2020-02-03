@@ -1,10 +1,14 @@
-class AccountType(object):
-    NORMAL = 0
-    IRONMAN = 1
-    HARDCORE_IRONMAN = 2
-    ULTIMATE_IRONMAN = 3
-    DEADMAN = 4
-    DEADMAN_SEASONAL = 5
+from enum import Enum, unique
+
+
+@unique
+class AccountType(Enum):
+    NORMAL           = "/m=hiscore_oldschool/index_lite.ws"
+    IRONMAN          = "/m=hiscore_oldschool_ironman/index_lite.ws"
+    HARDCORE_IRONMAN = "/m=hiscore_oldschool_hardcore_ironman/index_lite.ws"
+    ULTIMATE_IRONMAN = "/m=hiscore_oldschool_ultimate/index_lite.ws"
+    DEADMAN          = "/m=hiscore_oldschool_deadman/index_lite.ws"
+    SEASONAL         = "/m=hiscore_oldschool_seasonal/index_lite.ws"
 
 
 # Thanks to http://mirekw.com/rs/RSDOnline/Guides/guide.aspx?file=Experience%20formula.html for the formula
@@ -23,9 +27,7 @@ def _build_xp_table():
 # index retrives the amount of xp required for level index + 1
 XP_TABLE = _build_xp_table()
 
-UNUSED_OR_UNKNOWN = (
-    "UNUSED_OR_UNKNOWN"  # Some rows in the API response don't seem to map to anything
-)
+UNUSED_OR_UNKNOWN = "UNUSED_OR_UNKNOWN"  # Use this as a placeholder for unknown API response rows
 
 SKILLS = [
     "attack",
@@ -71,37 +73,39 @@ BOSSES = [
     "Abyssal Sire",
     "Alchemical Hydra",
     "Barrows Chests",
-    UNUSED_OR_UNKNOWN,
+    "Bryophyta",
+    "Callisto",
+    "Cerberus",
     "Chambers of Xeric",
-    UNUSED_OR_UNKNOWN,
+    "Chambers of Xeric: Challenge Mode",
     "Chaos Elemental",
     "Chaos Fanatic",
     "Commander Zilyana",
-    UNUSED_OR_UNKNOWN,
+    "Corporeal Beast",
     "Crazy Archaeologist",
     "Dagannoth Prime",
     "Dagannoth Rex",
     "Dagannoth Supreme",
-    UNUSED_OR_UNKNOWN,
+    "Deranged Archaeologist",
     "General Graardor",
     "Giant Mole",
-    UNUSED_OR_UNKNOWN,
+    "Grotesque Guardians",
     "Hespori",
     "Kalphite Queen",
     "King Black Dragon",
     "Kraken",
     "Kree'Arra",
     "K'ril Tsutsaroth",
-    UNUSED_OR_UNKNOWN,
-    UNUSED_OR_UNKNOWN,
-    UNUSED_OR_UNKNOWN,
+    "Mimic",
+    "Obor",
+    "Sarachnis",
     "Scorpia",
     "Skotizo",
-    UNUSED_OR_UNKNOWN,
-    UNUSED_OR_UNKNOWN,
-    UNUSED_OR_UNKNOWN,
+    "The Guantlet",
+    "The Corrupted Guantlet",
+    "Theatre of Blood",
     "Thermonuclear Smoke Devil",
-    UNUSED_OR_UNKNOWN,
+    "TzKal-Zuk",
     "TzTok-Jad",
     "Venenatis",
     "Vet'ion",
@@ -116,14 +120,6 @@ MINIGAMES_AMT = len(MINIGAMES)
 BOSSES_AMT = len(BOSSES)
 
 BASE_URL = "http://services.runescape.com"
-HISCORE_URLS = [
-    "/m=hiscore_oldschool/index_lite.ws",
-    "/m=hiscore_oldschool_ironman/index_lite.ws",
-    "/m=hiscore_oldschool_hardcore_ironman/index_lite.ws",
-    "/m=hiscore_oldschool_ultimate/index_lite.ws",
-    "/m=hiscore_oldschool_deadman/index_lite.ws",
-    "/m=hiscore_oldschool_seasonal/index_lite.ws",
-]
 
 BASE_URL_GE = BASE_URL + "/m=itemdb_oldschool/"
 GE_BY_ID = BASE_URL_GE + "api/catalogue/detail.json?item="
