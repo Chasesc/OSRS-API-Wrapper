@@ -1,11 +1,11 @@
-import const
 import urllib.request
 import json
 import warnings
 
-from item import Item
-from pricetrend import PriceTrend
-from priceinfo import PriceInfo
+from . import const
+from .item import Item
+from .pricetrend import PriceTrend
+from .priceinfo import PriceInfo
 
 
 class GrandExchange(object):

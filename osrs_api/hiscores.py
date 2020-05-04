@@ -1,10 +1,9 @@
-import const
 import re
 import urllib.request
-from skill import Skill
-
 from collections import namedtuple
 
+from . import const
+from .skill import Skill
 
 Minigame = namedtuple("Minigame", ["name", "rank", "score"])
 Boss = namedtuple("Boss", ["name", "rank", "kills"])
@@ -13,6 +12,7 @@ Boss = namedtuple("Boss", ["name", "rank", "kills"])
 class Hiscores(object):
     def __init__(self, username, type=const.AccountType.NORMAL):
         self.username = username
+        self._type = type
         self._url = const.BASE_URL + type.value + "?player="
 
         self.rank, self.total_level, self.total_xp = -1, -1, -1
@@ -134,13 +134,17 @@ class Hiscores(object):
         return {s: self.skills[s] for s in self.skills if predicate(self, s)}
 
     def __str__(self):
+        attrs = [("Rank", self.rank), ("Total Level", self.total_level), ("Total XP", self.total_xp)]
         return (
             "\n".join(
-                str(item) for item in [self.rank, self.total_level, self.total_xp]
+                f"{name}: {str(item)}" for name, item in attrs
             )
             + "\n"
             + "\n".join(str(self.skills[skill]) for skill in self.skills)
         )
+
+    def __repr__(self):
+        return f"Hiscores({self.username}, type={self._type.name})"
 
     # ==
     def __eq__(self, other):

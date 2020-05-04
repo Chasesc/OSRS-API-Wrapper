@@ -29,7 +29,12 @@ class PriceTrend(object):
         return float(change[:-1])
 
     def __str__(self):
-        return "p:%s---t:%s---c:%s" % (self.price, self.trend, self.change)
+        v = vars(self)
+        details = ', '.join([f"{n}={v}" for n, v in v.items() if v is not None])
+        return f"PriceTrend({details})"
+
+    def __repr__(self):
+        return self.__str__()
 
 
 def main():

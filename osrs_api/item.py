@@ -1,6 +1,5 @@
-import const
 import json
-
+from . import const
 
 class Item(object):
     _items = {}
