@@ -1,6 +1,8 @@
 import re
 import urllib.request
+
 from collections import namedtuple
+from urllib.parse import quote
 
 from . import const
 from .skill import Skill
@@ -29,7 +31,8 @@ class Hiscores(object):
 
     def _get_api_data(self):
         try:
-            url = urllib.request.urlopen("%s%s" % (self._url, self.username))
+            safe_url = "%s%s" % (self._url, quote(self.username))
+            url = urllib.request.urlopen(safe_url)
         except urllib.error.HTTPError:
             raise Exception("Unable to find %s in the hiscores." % self.username)
 

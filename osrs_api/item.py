@@ -1,4 +1,6 @@
 import json
+
+from pathlib import Path
 from . import const
 
 
@@ -48,7 +50,7 @@ class Item(object):
 
     @staticmethod
     def _load_data():
-        with open("items_osrs.json") as file:
+        with open(Path(__file__).parent / "items_osrs.json") as file:
             Item._items = json.load(file)
             for id in Item._items:
                 n = Item._items[id]["name"].lower()
