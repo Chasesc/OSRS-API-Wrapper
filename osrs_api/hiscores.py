@@ -134,11 +134,13 @@ class Hiscores(object):
         return {s: self.skills[s] for s in self.skills if predicate(self, s)}
 
     def __str__(self):
-        attrs = [("Rank", self.rank), ("Total Level", self.total_level), ("Total XP", self.total_xp)]
+        attrs = [
+            ("Rank", self.rank),
+            ("Total Level", self.total_level),
+            ("Total XP", self.total_xp),
+        ]
         return (
-            "\n".join(
-                f"{name}: {str(item)}" for name, item in attrs
-            )
+            "\n".join(f"{name}: {str(item)}" for name, item in attrs)
             + "\n"
             + "\n".join(str(self.skills[skill]) for skill in self.skills)
         )

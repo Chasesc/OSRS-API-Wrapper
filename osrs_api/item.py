@@ -1,6 +1,7 @@
 import json
 from . import const
 
+
 class Item(object):
     _items = {}
     _name_to_id = {}

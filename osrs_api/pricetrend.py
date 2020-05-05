@@ -30,7 +30,7 @@ class PriceTrend(object):
 
     def __str__(self):
         v = vars(self)
-        details = ', '.join([f"{n}={v}" for n, v in v.items() if v is not None])
+        details = ", ".join([f"{n}={v}" for n, v in v.items() if v is not None])
         return f"PriceTrend({details})"
 
     def __repr__(self):

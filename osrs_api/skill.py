@@ -1,5 +1,6 @@
 from . import const
 
+
 class Skill(object):
     def __init__(self, name, rank=0, level=0, xp=0):
         if name not in const.SKILLS:
