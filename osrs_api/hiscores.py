@@ -12,10 +12,13 @@ Boss = namedtuple("Boss", ["name", "rank", "kills"])
 
 
 class Hiscores(object):
-    def __init__(self, username, type=const.AccountType.NORMAL):
+    def __init__(self, username, account_type=None):
         self.username = username
-        self._type = type
-        self._url = const.BASE_URL + type.value + "?player="
+        self._type = account_type
+        self._api_response = None
+
+        if self._type is None:
+            self._find_account_type() # _type is set inside _find_account_type
 
         self.rank, self.total_level, self.total_xp = -1, -1, -1
 
@@ -26,15 +29,41 @@ class Hiscores(object):
         self.update()
 
     def update(self):
-        self._api_response = self._get_api_data()
+        # In the default case (account_type=None), we already have this information. We don't need to do it again
+        if self._api_response is None:
+            self._api_response = self._get_api_data()
         self._set_data()
+        self._api_response = None
+
+    @property
+    def _url(self):
+        return const.BASE_URL + self._type.value + "?player="
+
+    def _find_account_type(self):
+        '''
+        The RS API does not tell you the account type, so we have to find out here.
+        Try in the order of special type -> normal account, so we find the correct type
+        '''
+
+        for possible_type in reversed(const.AccountType.normal_types()):
+            try:
+                self._type = possible_type
+                self._api_response = self._get_api_data()
+                return
+            except:
+                pass
+
+        self._raise_bad_username()
+
+    def _raise_bad_username(self):
+        raise Exception("Unable to find %s in the hiscores." % self.username)
 
     def _get_api_data(self):
         try:
             safe_url = "%s%s" % (self._url, quote(self.username))
             url = urllib.request.urlopen(safe_url)
         except urllib.error.HTTPError:
-            raise Exception("Unable to find %s in the hiscores." % self.username)
+            self._raise_bad_username()
 
         data = url.read()
         url.close()

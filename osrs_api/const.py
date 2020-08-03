@@ -10,6 +10,10 @@ class AccountType(Enum):
     DEADMAN = "/m=hiscore_oldschool_deadman/index_lite.ws"
     SEASONAL = "/m=hiscore_oldschool_seasonal/index_lite.ws"
 
+    @classmethod
+    def normal_types(cls):
+        return [cls.NORMAL, cls.IRONMAN, cls.HARDCORE_IRONMAN, cls.ULTIMATE_IRONMAN]
+
 
 # Thanks to http://mirekw.com/rs/RSDOnline/Guides/guide.aspx?file=Experience%20formula.html for the formula
 def _build_xp_table():
