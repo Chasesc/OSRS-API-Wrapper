@@ -18,7 +18,7 @@ class Hiscores(object):
         self._api_response = None
 
         if self._type is None:
-            self._find_account_type() # _type is set inside _find_account_type
+            self._find_account_type()  # _type is set inside _find_account_type
 
         self.rank, self.total_level, self.total_xp = -1, -1, -1
 
@@ -29,7 +29,8 @@ class Hiscores(object):
         self.update()
 
     def update(self):
-        # In the default case (account_type=None), we already have this information. We don't need to do it again
+        # In the default case (account_type=None), we already have this
+        # information. We don't need to do it again
         if self._api_response is None:
             self._api_response = self._get_api_data()
         self._set_data()
@@ -50,7 +51,7 @@ class Hiscores(object):
                 self._type = possible_type
                 self._api_response = self._get_api_data()
                 return
-            except:
+            except BaseException:
                 pass
 
         self._raise_bad_username()
@@ -87,7 +88,7 @@ class Hiscores(object):
         # Get all the skills, minigames, or bosses
         def _get_api_chunk(cls, *, names, start_index):
             """
-            cls: Skill, Minigame, or Boss - Type of the chunk 
+            cls: Skill, Minigame, or Boss - Type of the chunk
             names: List[str] - a list of all the (Skill, Minigame, or Boss) names in the order the API returns them.
                    (const.SKILLS, const.MINIGAMES, or const.BOSSES)
             start_index: The index into self._api_response where the chunk begins
@@ -96,11 +97,13 @@ class Hiscores(object):
             chunk = {}
 
             for i, name in enumerate(names, start=start_index):
-                if name == const.UNUSED_OR_UNKNOWN:
+                if (self._type is not const.AccountType.SEASONAL and name ==
+                        "League Points"):
                     continue
 
                 # The API only returns integers
-                row_data = [int(col) for col in self._api_response[i].split(",")]
+                row_data = [int(col)
+                            for col in self._api_response[i].split(",")]
 
                 chunk[name] = cls(name, *row_data)
 
