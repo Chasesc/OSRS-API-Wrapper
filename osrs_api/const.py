@@ -12,10 +12,15 @@ class AccountType(Enum):
 
     @classmethod
     def normal_types(cls):
-        return [cls.NORMAL, cls.IRONMAN, cls.HARDCORE_IRONMAN, cls.ULTIMATE_IRONMAN]
+        return [cls.NORMAL,
+                cls.IRONMAN,
+                cls.HARDCORE_IRONMAN,
+                cls.ULTIMATE_IRONMAN]
 
 
-# Thanks to http://mirekw.com/rs/RSDOnline/Guides/guide.aspx?file=Experience%20formula.html for the formula
+# Thanks to
+# http://mirekw.com/rs/RSDOnline/Guides/guide.aspx?file=Experience%20formula.html
+# for the formula
 def _build_xp_table():
     table = [0]
     xp = 0
@@ -30,8 +35,6 @@ def _build_xp_table():
 
 # index retrives the amount of xp required for level index + 1
 XP_TABLE = _build_xp_table()
-
-UNUSED_OR_UNKNOWN = "UNUSED_OR_UNKNOWN"  # Use this as a placeholder for unknown API response rows
 
 SKILLS = [
     "attack",
@@ -60,7 +63,7 @@ SKILLS = [
 ]
 
 MINIGAMES = [
-    UNUSED_OR_UNKNOWN,
+    "League Points",
     "Bounty Hunter",
     "Bounty Hunter Rogue",
     "Clue Scrolls (all)",
