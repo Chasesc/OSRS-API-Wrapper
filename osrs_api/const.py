@@ -64,8 +64,8 @@ SKILLS = [
 
 MINIGAMES = [
     "League Points",
-    "Bounty Hunter",
-    "Bounty Hunter Rogue",
+    "Bounty Hunter - Hunter",
+    "Bounty Hunter - Rogue",
     "Clue Scrolls (all)",
     "Clue Scrolls (beginner)",
     "Clue Scrolls (easy)",
@@ -73,7 +73,10 @@ MINIGAMES = [
     "Clue Scrolls (hard)",
     "Clue Scrolls (elite)",
     "Clue Scrolls (master)",
-    "Last Man Standing",
+    "LMS - Rank",
+    "PvP Arena - Rank",
+    "Soul Wars Zeal",
+    "Rifts closed",
 ]
 
 BOSSES = [
