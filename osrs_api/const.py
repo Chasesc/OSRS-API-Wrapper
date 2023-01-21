@@ -111,6 +111,7 @@ BOSSES = [
     "Nightmare",
     "Phosani's Nightmare",
     "Obor",
+    "Phantom Muspah",
     "Sarachnis",
     "Scorpia",
     "Skotizo",
